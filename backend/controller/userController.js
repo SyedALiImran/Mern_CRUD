@@ -14,14 +14,12 @@ const getUserGoal = asyncHandler(async (req, res) => {
 //@route   POST/api/users
 //@access  Private
 const createUserGoal = asyncHandler(async (req, res) => {
-  const { name, email, goal } = req.body;
-  if (!name || !email || !goal) {
+  const {goal} = req.body;
+  if (!goal) {
     res.status(400);
-    throw new Error("Kindly fill the fields");
+    throw new Error("Kindly fill the Goal");
   }
   const createGoal = await userGoalScehma.create({
-    name: req.body.name,
-    email: req.body.email,
     goal: req.body.goal,
   });
 
@@ -40,8 +38,6 @@ const updateUserGoal = asyncHandler(async (req, res) => {
   const updateGoal = await userGoalScehma.findByIdAndUpdate(
     req.params.id,
     {
-      name: req.body.name,
-      email: req.body.email,
       goal: req.body.goal,
     },
     { new: true }
