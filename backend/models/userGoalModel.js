@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const userGoalScehma = mongoose.Schema({
-    
+    user:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'User',
+    },
     goal:{
         type:String,
         required:[true,'please add goal ']
@@ -12,4 +16,4 @@ const userGoalScehma = mongoose.Schema({
 }
 )
 
-module.exports = mongoose.model('usergoals',userGoalScehma)
+module.exports = mongoose.model('usergoal',userGoalScehma)

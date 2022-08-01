@@ -6,7 +6,7 @@ const userGoalScehma = require("../models/userGoalModel");
 //@route   GET/api/users
 //@access  Private
 const getUserGoal = asyncHandler(async (req, res) => {
-  const userGoals = await userGoalScehma.find();
+  const userGoals = await userGoalScehma.find({user: req.user.id});
   res.status(200).json(userGoals);
 });
 
@@ -14,13 +14,13 @@ const getUserGoal = asyncHandler(async (req, res) => {
 //@route   POST/api/users
 //@access  Private
 const createUserGoal = asyncHandler(async (req, res) => {
-  const {goal} = req.body;
-  if (!goal) {
+  if (!req.body.goal) {
     res.status(400);
     throw new Error("Kindly fill the Goal");
   }
   const createGoal = await userGoalScehma.create({
     goal: req.body.goal,
+    user: req.user.id
   });
 
   res.status(200).json(createGoal);
@@ -39,7 +39,7 @@ const updateUserGoal = asyncHandler(async (req, res) => {
     req.params.id,
     {
       goal: req.body.goal,
-    },
+    }, 
     { new: true }
   );
 
