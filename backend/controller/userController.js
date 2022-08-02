@@ -38,6 +38,7 @@ const updateUserGoal = asyncHandler(async (req, res) => {
   //---------------- find loged in user in usermodel
   const user = await userModel.findById(req.user.id);
   console.log(user)
+  //------------- KAL DEKHUNGA--------------------
   console.log('I AM ID user._id '+user._id)
   console.log('I AM ID userGoalScehma.user '+userGoalScehma.goal)
 
@@ -50,7 +51,7 @@ const updateUserGoal = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("Not Authorized ");
   }
-
+//------------------------YAHAN TAK-----------
   const updateGoal = await userGoalScehma.findByIdAndUpdate(
     req.params.id,
     {
