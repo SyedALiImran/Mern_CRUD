@@ -1,7 +1,5 @@
 const asyncHandler = require("express-async-handler");
 
-// const GGOAL = require("../models/userGoalModel");
-// const UUSER = require("../models/UUSER");
 
 const GGOAL = require("../models/userGoalModel");
 const UUSER = require("../models/userModel");
@@ -66,9 +64,29 @@ const updateUserGoal = asyncHandler(async (req, res) => {
 //@access  Private
 const deleteUserGoal = asyncHandler(async (req, res) => {
   const deleteGoalId = await GGOAL.findById(req.params.id);
+console.log('this is deletegoalit'+deleteGoalId);
+
   if (!deleteGoalId) {
     res.status(400);
     res.send({ error: "goal not found" });
+  }
+
+  // check insure logined user in UUSER MODEL
+ 
+  const user = await UUSER.findById(req.user.id); 
+
+  console.log('this is loggedInUser'+user);
+
+  if(!user){
+    res.status(401)
+    throw new Error("User not Found")
+  }
+  
+  // chckng loggind user is correct user to delte goal or not
+
+  if(deleteGoalId.user.toString() !== user._id.toString()){
+    res.status(401)
+    throw new Error("Not Authorized To Delete");
   }
  
   await deleteGoalId.remove();
