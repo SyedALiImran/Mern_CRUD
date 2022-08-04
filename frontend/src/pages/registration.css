@@ -1,0 +1,85 @@
+.global-container{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.center{
+       
+    width: 250px;
+    height: 250px;
+}
+
+
+input[type=email],
+input[type=password],
+input[type=text]{
+   
+   border: 3px solid #464655; 
+}
+input[type=email]:focus,
+input[type=password]:focus,
+input[type=text]:focus{
+   
+   border: 3px solid #ff6464; 
+   box-shadow: none;
+   outline: none;
+
+}
+.loginbtn{
+    border:1px solid #ff6464 ;
+    background-color: #ff6464 !important ;
+    box-shadow: none;
+    outline: none;
+    
+}
+.loginbtn:focus{
+    box-shadow: none;
+    outline: none;
+}
+.loginbtn:hover{
+    background-color: #464655 !important ;
+    border: none;
+}
+
+.goalImg{
+    width: 160px;
+    height: 160px;
+    margin-left: 40px;
+}
+
+
+@media only screen and (max-width: 248px) { 
+    .goalImg{
+        width: 130px;
+        height: 130px;
+        margin-left: 40px;
+    }
+    input[type=email],
+    input[type=password]{
+        height: 40px !important;
+    } 
+    
+
+ }
+
+@media only screen and (max-width: 215px) { 
+    .goalImg{
+        width: 130px;
+        height: 130px;
+        margin-left: 20px;
+    }
+    input[type=email],
+    input[type=password]{
+        height: 40px !important;
+    } 
+    
+
+ }
+
+
+
+
+ 
