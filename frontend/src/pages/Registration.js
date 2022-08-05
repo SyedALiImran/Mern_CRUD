@@ -1,34 +1,72 @@
-import React from 'react'
-import { useState } from 'react';
+import React from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { reset, register } from "../features/auth/authSlice";
 
 import goalIcon from "../images/goalIcon.png";
-
-import '../pages/registration.css'
+import { toast } from "react-toastify";
+import "../pages/registration.css";
 
 const Registration = () => {
   const [signUpData, setSignUpData] = useState({
-    name:"",
+    name: "",
     email: "",
     password: "",
-    cpassword: ""
+    cpassword: "",
   });
-  const onSubmitt = () => {
-    console.log(signUpData)
+  const { name, email, password, cpassword } = signUpData;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+    useEffect(() => {
+      
+      if(isError){
+        toast.error(message);
+      }
+      if(isSuccess || user){
+        navigate('/');
+      }
+      dispatch(reset())
+    }, [user,isError,isSuccess,message,dispatch,navigate])
+    
+
+
+  const onSubmitt = (e) => {
+    e.preventDefault();
+    if (password !== cpassword) {
+      toast.error("passwords do not match");
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+      };
+
+      console.log(userData)
+      dispatch(register(userData));
+    }
   };
 
   const handleInput = (e) => {
+    e.preventDefault();
     let name, value;
-
     name = e.target.name;
     value = e.target.value;
     setSignUpData({ ...signUpData, [name]: value });
   };
-
-  return ( 
+  if(isLoading){
+    toast.error("loading");
+  }
+  return (
     <>
       <div className="container-fluid global-container">
         <div className="center">
-          <form action="">
+          <form onSubmit={onSubmitt}>
             <img
               src={goalIcon}
               className="img-fluid goalImg"
@@ -38,8 +76,8 @@ const Registration = () => {
             <input
               type="text"
               className="form-control mb-2 my-3"
-              name="text"
-              value={signUpData.namel}
+              name="name"
+              value={signUpData.name}
               onChange={handleInput}
               placeholder="Enter Your Name"
             />
@@ -51,7 +89,7 @@ const Registration = () => {
               onChange={handleInput}
               placeholder="Enter Your Email"
             />
-            
+
             <input
               type="password"
               className="form-control mb-2 my-3"
@@ -69,9 +107,9 @@ const Registration = () => {
               placeholder="Confirm Password"
             />
             <button
-              type="button"
+              type="submit"
               className="form-control  btn btn-primary my-4 loginbtn"
-              onClick={onSubmitt}
+              
             >
               SignUp
             </button>
@@ -79,7 +117,7 @@ const Registration = () => {
         </div>
       </div>
     </>
-   )
-}
+  );
+};
 
-export default Registration
+export default Registration;
