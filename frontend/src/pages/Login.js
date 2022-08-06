@@ -1,6 +1,11 @@
-import React from "react";
-import { useState } from "react";
+                          import React from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+import { reset, login } from "../features/auth/authSlice";
+
+import { toast } from "react-toastify";
 import goalIcon from "../images/goalIcon.png";
 import "../pages/login.css";
 
@@ -9,24 +14,53 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const onSubmitt = () => {
-    console.log(loginData);
+
+  const { email, password } = loginData;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      navigate("/dashboard");
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, dispatch, navigate]);
+
+  const onSubmitt = (e) => {
+    e.preventDefault();
+    const userData = {
+      email,
+      password,
+    };
+
+    dispatch(login(userData));
+    let API_URL = "/api/users/";
+    console.log(API_URL + "login");
   };
 
   const handleInput = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let name, value;
 
     name = e.target.name;
     value = e.target.value;
     setLoginData({ ...loginData, [name]: value });
   };
-
+  if(isLoading){
+    toast.success('Loading Data');
+  }
   return (
     <>
       <div className="container-fluid global-container">
         <div className="center">
-          <form action="">
+          <form onSubmit={onSubmitt}>
             <img
               src={goalIcon}
               className="img-fluid goalImg"
@@ -41,7 +75,7 @@ const Login = () => {
               onChange={handleInput}
               placeholder="Email"
             />
-            
+
             <input
               type="password"
               className="form-control mb-2"
@@ -51,9 +85,8 @@ const Login = () => {
               placeholder="Password"
             />
             <button
-              type="button"
+              type="submit"
               className="form-control  btn btn-primary mb-3 loginbtn"
-              onClick={onSubmitt}
             >
               Login
             </button>

@@ -67,7 +67,8 @@ const loginUsers = asyncHandler(async (req, res) => {
   if (!email || !password) {
     res.status(400);
     throw new Error("Kindly fill the fields correctly");
-  } else {
+  }
+   else {
     // finding user
 
     const user = await userRegistration.findOne({ email });

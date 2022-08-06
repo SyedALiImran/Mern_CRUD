@@ -26,10 +26,10 @@ const Registration = () => {
     useEffect(() => {
       
       if(isError){
-        toast.error(message);
+       toast.error(message);
       }
       if(isSuccess || user){
-        navigate('/');
+        navigate('/dashboard');
       }
       dispatch(reset())
     }, [user,isError,isSuccess,message,dispatch,navigate])
@@ -47,10 +47,13 @@ const Registration = () => {
         password,
       };
 
-      console.log(userData)
+      
       dispatch(register(userData));
     }
   };
+  if(isLoading){
+    toast.success('Loading Data');
+  }
 
   const handleInput = (e) => {
     e.preventDefault();
@@ -59,9 +62,7 @@ const Registration = () => {
     value = e.target.value;
     setSignUpData({ ...signUpData, [name]: value });
   };
-  if(isLoading){
-    toast.error("loading");
-  }
+  
   return (
     <>
       <div className="container-fluid global-container">
@@ -71,7 +72,7 @@ const Registration = () => {
               src={goalIcon}
               className="img-fluid goalImg"
               alt="Goal_Image"
-              srcSet="Goal Image"
+             
             />
             <input
               type="text"

@@ -1,9 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {  useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { reset, logOut } from "../../features/auth/authSlice";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Header = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  
+
+  useEffect(() => {}, []);
+
+  const onLogOut = () =>{
+    dispatch(logOut());
+    dispatch(reset());
+    navigate('/')
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -24,16 +42,31 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
-                  SignIn
-                </Link>
-              </li>
-              <li className="nav-item">
+              {user ? (
+                <>
+                  <li className="nav-item">
+                    <button
+                      className="nav-link active btn btn-outline-danger btn-sm form-control"
+                      aria-current="page"
+                      onClick={onLogOut}
+                      style={{marginTop:'10px'}}
+                      
+                    >
+                      SignOut
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                <li className="nav-item">
                 <Link className="nav-link" to="/registration">
                   SignUp
                 </Link>
               </li>
+                </>
+              )}
+
+              
             </ul>
           </div>
         </div>
