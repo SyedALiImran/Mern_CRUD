@@ -13,8 +13,13 @@ const Header = () => {
   const dispatch = useDispatch();
 
   
-
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if(!user){
+      navigate('/')
+    }
+  }, [user,navigate])
+  
+  // useEffect(() => {}, []);
 
   const onLogOut = () =>{
     dispatch(logOut());

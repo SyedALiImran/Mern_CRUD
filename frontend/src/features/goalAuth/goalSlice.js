@@ -2,7 +2,7 @@ import {createSlice , createAsyncThunk} from '@reduxjs/toolkit'
 import goalService from '../goalAuth/goalServices'
 
 const initialState= {
-    goals:[],
+    allGoals:[],
     isError:false,
     isLoading:false,
     isSuccess:false,
@@ -54,7 +54,7 @@ export const goalSlice = createSlice({
         builder.addCase(createGoal.fulfilled,(state,action)=>{
             state.isLoading=false
             state.isSuccess=true
-            state.goals.push(action.payload)
+            state.allGoals.push(action.payload)
         })
         builder.addCase(createGoal.rejected,(state,action)=>{
             state.isLoading=false
@@ -66,7 +66,7 @@ export const goalSlice = createSlice({
         builder.addCase(getGoal.fulfilled,(state,action)=>{
             state.isLoading=false
             state.isSuccess=true
-            state.goals=action.payload
+            state.allGoals=action.payload
         })
         builder.addCase(getGoal.rejected,(state,action)=>{
             state.isLoading=false

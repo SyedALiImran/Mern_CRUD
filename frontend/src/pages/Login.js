@@ -1,7 +1,7 @@
                           import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,Link} from "react-router-dom";
 
 import { reset, login } from "../features/auth/authSlice";
 
@@ -30,7 +30,10 @@ const Login = () => {
     if (isSuccess || user) {
       navigate("/dashboard");
     }
-    dispatch(reset());
+    return()=>{
+
+      dispatch(reset());
+    }
   }, [user, isError, isSuccess, message, dispatch, navigate]);
 
   const onSubmitt = (e) => {
@@ -90,6 +93,7 @@ const Login = () => {
             >
               Login
             </button>
+            <span>dont have Account ?<Link to='/registration'>Create Account</Link> </span>
           </form>
         </div>
       </div>

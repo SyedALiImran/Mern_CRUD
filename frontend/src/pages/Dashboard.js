@@ -11,30 +11,40 @@ import "./dashboard.css";
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { user } = useSelector((state) => state.auth);
-  const { goals,isError,isLoading,message } = useSelector((state) => state.goals);
+  const { allGoals,isError,isLoading,message } = useSelector((state) => state.goals);
   const [goal, setGoal] = useState("");
 
-  useEffect(() => {
-    if(isError) console.log(message)
-    if (!user) navigate("/");
-    dispatch(getGoal())
-   dispatch(reset())
+ 
 
-  }, [user,goals,dispatch, navigate , isError,message]);
+  useEffect(() => {
+    if(isError){
+      console.log('i am is error message'+message)
+    }
+
+    if (!user){ 
+      navigate("/")
+    };
+    dispatch(getGoal())
+    return ()=>{
+     dispatch(reset())
+
+    }
+    
+
+  }, [user, navigate,isError ]);
 
   const onSubmitt = (e) => {
     e.preventDefault();
     
     dispatch(createGoal({goal}));
-    toast.success("Goal in Queue");
+    toast.success("Goal created");
     setGoal("");
   };
 
-  if(isLoading){
-    toast.success('Loading Data');
-  }
+  // if(isLoading){
+  //   console.log('Loading Data');
+  // }
   return (
     <>
       <div className="container-fluid" style={{ paddingLeft: "20px" }}>
@@ -82,6 +92,11 @@ const Dashboard = () => {
                 </form>
               </div>
             </div>
+              {allGoals.map((userdata)=>{
+                return(
+                  <h1 key={userdata._id}>{userdata.goal}</h1>
+                )
+              })}
           </div>
         </div>
       </div>
