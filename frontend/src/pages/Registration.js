@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 import { reset, register } from "../features/auth/authSlice";
-
+import Spinner from '../pages/components/spinner'
 import goalIcon from "../images/goalIcon.png";
 import { toast } from "react-toastify";
 import "../pages/registration.css";
@@ -32,7 +32,7 @@ const Registration = () => {
         navigate('/dashboard');
       }
       dispatch(reset())
-    }, [user,isError,isSuccess,message,dispatch,navigate])
+    }, [user,isError,isSuccess,dispatch,navigate])
     
 
 
@@ -46,13 +46,14 @@ const Registration = () => {
         email,
         password,
       };
-
-      
       dispatch(register(userData));
+      
+       
+      
     }
   };
   if(isLoading){
-    toast.success('Loading Data');
+    <Spinner />
   }
 
   const handleInput = (e) => {
@@ -76,6 +77,7 @@ const Registration = () => {
             />
             <input
               type="text"
+              id="asd"
               className="form-control mb-2 my-3"
               name="name"
               value={signUpData.name}
@@ -107,9 +109,10 @@ const Registration = () => {
               onChange={handleInput}
               placeholder="Confirm Password"
             />
+            <span style={{fontSize:'15px'}}>have Account ?<button className='btn btn-sm btn-primary' onClick={()=>navigate('/login')}>Login</button> </span>
             <button
               type="submit"
-              className="form-control  btn btn-primary my-4 loginbtn"
+              className="form-control  btn btn-primary my-2 loginbtn"
               
             >
               SignUp

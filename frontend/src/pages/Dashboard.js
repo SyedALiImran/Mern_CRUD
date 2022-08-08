@@ -4,7 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import userImg from "../images/user.png";
 
-import { createGoal, getGoal , reset } from "../features/goalAuth/goalSlice";
+import {
+  createGoal,
+  deleteGoal,
+  getGoal,
+  reset,
+} from "../features/goalAuth/goalSlice";
+import Spinner from "../pages/components/spinner";
 import { toast } from "react-toastify";
 import "./dashboard.css";
 
@@ -12,39 +18,39 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { allGoals,isError,isLoading,message } = useSelector((state) => state.goals);
+  const { allGoals, isError, isLoading, message } = useSelector(
+    (state) => state.goals
+  );
   const [goal, setGoal] = useState("");
 
- 
-
   useEffect(() => {
-    if(isError){
-      console.log('i am is error message'+message)
+    if (isError) {
+      console.log(message);
     }
 
-    if (!user){ 
-      navigate("/")
+    if (!user) {
+      navigate("/");
+    }
+    dispatch(getGoal());
+    return () => {
+      dispatch(reset());
     };
-    dispatch(getGoal())
-    return ()=>{
-     dispatch(reset())
-
-    }
-    
-
-  }, [user, navigate,isError ]);
+  }, [user, navigate, isError, dispatch, message]);
 
   const onSubmitt = (e) => {
     e.preventDefault();
-    
-    dispatch(createGoal({goal}));
-    toast.success("Goal created");
-    setGoal("");
+    if (goal) {
+      dispatch(createGoal({ goal }));
+      toast.success("Goal created");
+      setGoal("");
+    } else {
+      toast.error("fill the goal field");
+    }
   };
 
-  // if(isLoading){
-  //   console.log('Loading Data');
-  // }
+  if (isLoading) {
+    <Spinner />;
+  }
   return (
     <>
       <div className="container-fluid" style={{ paddingLeft: "20px" }}>
@@ -55,8 +61,7 @@ const Dashboard = () => {
                 src={userImg}
                 className="img-fluid"
                 alt="userImg"
-                height={70}
-                width={70}
+                id="userImg"
               />
             </div>
             <div className="userInfo">
@@ -83,21 +88,40 @@ const Dashboard = () => {
                   />
 
                   <button
-                  type="submit"
+                    type="submit"
                     className="btn btn-primary btn-sm   my-2 "
-                    
                   >
                     Post Goal
                   </button>
                 </form>
               </div>
             </div>
-              {allGoals.map((userdata)=>{
-                return(
-                  <h1 key={userdata._id}>{userdata.goal}</h1>
-                )
-              })}
           </div>
+        </div>
+
+        <div className="tablee">
+            <div className="row">
+          {allGoals.map((userdataa) => {
+            return (
+              <div
+                className="card text-black carrd mb-3 border-dark"
+                style={{maxWidth: "16rem" , margin:'5px'}}
+                key={userdataa._id}
+              >
+                <div className="card-header border-danger" style={{backgroundColor:'white'}}>{userdataa.createdAt}
+                
+                </div>
+                <div className="card-body">
+                  <h5 className="card-title"></h5>
+                  <p className="card-text">
+                    {userdataa.goal}
+                  </p>
+                </div>
+                <div class="card-footer bg-transparent border-danger"><span onClick={()=>dispatch(deleteGoal(userdataa._id))} className='btn btn-danger btn-sm form-control'>Delete</span></div>
+              </div>
+            );
+          })}
+        </div>
         </div>
       </div>
     </>

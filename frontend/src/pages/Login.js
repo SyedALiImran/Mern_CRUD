@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate ,Link} from "react-router-dom";
 
 import { reset, login } from "../features/auth/authSlice";
-
+import Spinner from '../pages/components/spinner'
 import { toast } from "react-toastify";
 import goalIcon from "../images/goalIcon.png";
 import "../pages/login.css";
@@ -30,10 +30,10 @@ const Login = () => {
     if (isSuccess || user) {
       navigate("/dashboard");
     }
-    return()=>{
 
       dispatch(reset());
-    }
+    
+    
   }, [user, isError, isSuccess, message, dispatch, navigate]);
 
   const onSubmitt = (e) => {
@@ -44,8 +44,7 @@ const Login = () => {
     };
 
     dispatch(login(userData));
-    let API_URL = "/api/users/";
-    console.log(API_URL + "login");
+
   };
 
   const handleInput = (e) => {
@@ -57,7 +56,7 @@ const Login = () => {
     setLoginData({ ...loginData, [name]: value });
   };
   if(isLoading){
-    toast.success('Loading Data');
+    <Spinner />
   }
   return (
     <>
@@ -93,8 +92,8 @@ const Login = () => {
             >
               Login
             </button>
-            <span>dont have Account ?<Link to='/registration'>Create Account</Link> </span>
           </form>
+            <span style={{fontSize:'15px'}}>dont have Account ?<button  className='btn btn-sm btn-primary' onClick={()=>navigate('/')}>Create Account</button> </span>
         </div>
       </div>
     </>

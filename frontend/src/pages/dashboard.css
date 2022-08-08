@@ -5,17 +5,59 @@
     background-color: rgb(233, 249, 249);
     border-radius: 20px;
     
+    background-color:#F5F5F5;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .userInfo{
     margin-left: 5px;
     margin-top: 10px;
 }
 .postsection{
-  background-color: rgb(233, 249, 249);
-  padding: 20px;
+    
+    padding: 20px;
   border-radius: 20px;
+  background-color:#F5F5F5;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  font-weight: 400;
 }
 
 input[type=text]{
     border: 2px solid grey !important ;
 }
+
+.goalItem{
+    padding: 10px;
+    border-radius: 10px;
+    margin:5px;
+    
+    background-color:#F5F5F5;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    font-weight: 400;
+    /* align-items: center;   */
+    /* display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 300px; */
+
+}
+
+#userImg{
+
+    height:70px;
+    width:70px;
+}
+@media only screen and (max-width: 1039px) { 
+    #userImg{
+        display: none;
+    }
+   
+}
+@media only screen and (max-width: 770px) { 
+    .parent{
+       display: none;
+    }
+   
+}
+
+
+ 

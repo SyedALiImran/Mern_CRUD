@@ -15,16 +15,16 @@ const Header = () => {
   
   useEffect(() => {
     if(!user){
-      navigate('/')
+      navigate('/login')
     }
+    
   }, [user,navigate])
   
-  // useEffect(() => {}, []);
-
+  
   const onLogOut = () =>{
     dispatch(logOut());
     dispatch(reset());
-    navigate('/')
+    navigate('/login')
   }
 
   return (
@@ -63,11 +63,18 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                <li className="nav-item">
-                <Link className="nav-link" to="/registration">
-                  SignUp
-                </Link>
-              </li>
+                
+              <li className="nav-item">
+                    <button
+                      className="nav-link active btn btn-outline-danger btn-sm form-control"
+                      aria-current="page"
+                      onClick={()=>navigate('/')}
+                      style={{marginTop:'10px'}}
+                      
+                    >
+                      SignUp
+                    </button>
+                  </li>
                 </>
               )}
 
