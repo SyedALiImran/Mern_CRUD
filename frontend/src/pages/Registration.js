@@ -29,10 +29,12 @@ const Registration = () => {
        toast.error(message);
       }
       if(isSuccess || user){
-        navigate('/dashboard');
+        navigate('/');
       }
+
       dispatch(reset())
-    }, [user,isError,isSuccess,dispatch,navigate])
+
+    }, [user,isError,isSuccess,message,dispatch,navigate])
     
 
 
@@ -109,7 +111,7 @@ const Registration = () => {
               onChange={handleInput}
               placeholder="Confirm Password"
             />
-            <span style={{fontSize:'15px'}}>have Account ?<button className='btn btn-sm btn-primary' onClick={()=>navigate('/login')}>Login</button> </span>
+            <span style={{fontSize:'15px'}}>have Account ?<Link to='/login'>Login</Link> </span>
             <button
               type="submit"
               className="form-control  btn btn-primary my-2 loginbtn"

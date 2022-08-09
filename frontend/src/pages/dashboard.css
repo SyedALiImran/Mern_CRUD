@@ -25,7 +25,7 @@ input[type=text]{
     border: 2px solid grey !important ;
 }
 
-.goalItem{
+#carrd{
     padding: 10px;
     border-radius: 10px;
     margin:5px;

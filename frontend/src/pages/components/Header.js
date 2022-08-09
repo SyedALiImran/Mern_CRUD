@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {  useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { reset, logOut } from "../../features/auth/authSlice";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,26 +11,19 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  
-  useEffect(() => {
-    if(!user){
-      navigate('/login')
-    }
-    
-  }, [user,navigate])
-  
+
   
   const onLogOut = () =>{
     dispatch(logOut());
     dispatch(reset());
-    navigate('/login')
+    navigate('/')
   }
 
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand" to="/registration">
             Make It Happen
           </Link>
           <button
@@ -57,27 +49,19 @@ const Header = () => {
                       style={{marginTop:'10px'}}
                       
                     >
-                      SignOut
+                      logout
                     </button>
                   </li>
                 </>
               ) : (
                 <>
                 
-              <li className="nav-item">
-                    <button
-                      className="nav-link active btn btn-outline-danger btn-sm form-control"
-                      aria-current="page"
-                      onClick={()=>navigate('/')}
-                      style={{marginTop:'10px'}}
-                      
-                    >
-                      SignUp
-                    </button>
-                  </li>
+                
+              
                 </>
               )}
 
+                
               
             </ul>
           </div>

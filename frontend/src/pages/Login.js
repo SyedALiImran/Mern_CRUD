@@ -1,4 +1,4 @@
-                          import React from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate ,Link} from "react-router-dom";
@@ -28,7 +28,7 @@ const Login = () => {
       toast.error(message);
     }
     if (isSuccess || user) {
-      navigate("/dashboard");
+      navigate("/");
     }
 
       dispatch(reset());
@@ -86,6 +86,7 @@ const Login = () => {
               onChange={handleInput}
               placeholder="Password"
             />
+            <span style={{fontSize:'15px'}}>dont have Account ?<Link to='/registration'>Create Account</Link> </span>
             <button
               type="submit"
               className="form-control  btn btn-primary mb-3 loginbtn"
@@ -93,7 +94,6 @@ const Login = () => {
               Login
             </button>
           </form>
-            <span style={{fontSize:'15px'}}>dont have Account ?<button  className='btn btn-sm btn-primary' onClick={()=>navigate('/')}>Create Account</button> </span>
         </div>
       </div>
     </>

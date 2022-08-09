@@ -8,7 +8,7 @@ import {
   createGoal,
   deleteGoal,
   getGoal,
-  reset,
+
 } from "../features/goalAuth/goalSlice";
 import Spinner from "../pages/components/spinner";
 import { toast } from "react-toastify";
@@ -29,12 +29,11 @@ const Dashboard = () => {
     }
 
     if (!user) {
-      navigate("/");
+      navigate("/login");
     }
     dispatch(getGoal());
-    return () => {
-      dispatch(reset());
-    };
+    
+    
   }, [user, navigate, isError, dispatch, message]);
 
   const onSubmitt = (e) => {
@@ -100,28 +99,36 @@ const Dashboard = () => {
         </div>
 
         <div className="tablee">
-            <div className="row">
-          {allGoals.map((userdataa) => {
-            return (
-              <div
-                className="card text-black carrd mb-3 border-dark"
-                style={{maxWidth: "16rem" , margin:'5px'}}
-                key={userdataa._id}
-              >
-                <div className="card-header border-danger" style={{backgroundColor:'white'}}>{userdataa.createdAt}
-                
+          <div className="row">
+            {allGoals.map((userdataa) => {
+              return (
+                <div
+                  className="card text-black carrd mb-3 border-dark"
+                  style={{ maxWidth: "18rem", margin: "10px" }}
+                  key={userdataa._id}
+                >
+                  <div
+                    className="card-header border-danger"
+                    style={{ backgroundColor: "white" }}
+                  >
+                    {userdataa.createdAt}
+                  </div>
+                  <div className="card-body">
+                    <h5 className="card-title">-</h5>
+                    <p className="card-text">{userdataa.goal}</p>
+                  </div>
+                  <div className="card-footer bg-transparent border-danger">
+                    <span
+                      onClick={() => dispatch(deleteGoal(userdataa._id))}
+                      className="btn btn-danger btn-sm form-control"
+                    >
+                      Delete
+                    </span>
+                  </div>
                 </div>
-                <div className="card-body">
-                  <h5 className="card-title"></h5>
-                  <p className="card-text">
-                    {userdataa.goal}
-                  </p>
-                </div>
-                <div class="card-footer bg-transparent border-danger"><span onClick={()=>dispatch(deleteGoal(userdataa._id))} className='btn btn-danger btn-sm form-control'>Delete</span></div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>
