@@ -31,8 +31,8 @@ const Dashboard = () => {
     if (!user) {
       navigate("/login");
     }
-    dispatch(getGoal());
     
+    dispatch(getGoal());
     
   }, [user, navigate, isError, dispatch, message]);
 

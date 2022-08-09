@@ -43,14 +43,12 @@ const updateUserGoal = asyncHandler(async (req, res) => {
   const user = await UUSER.findById(req.user.id);
 
   if (!user) {
-    res.status(401);
-    throw new Error("User Not Found");
+    return res.status(401).json("User Not Found");
   }
   //-- make sure corect user loggin
 
   if (goalId.user.toString() !== user._id.toString()) {
-    res.status(401);
-    throw new Error("Not Authorized ");
+    return res.status(401).json("Not Authorized ");
   }
 
   const updateGoal = await GGOAL.findByIdAndUpdate(
@@ -72,8 +70,7 @@ const deleteUserGoal = asyncHandler(async (req, res) => {
   const deleteGoalId = await GGOAL.findById(req.params.id);
 
   if (!deleteGoalId) {
-    res.status(400);
-    res.send({ error: "goal not found" });
+    return res.status(400).json({ error: "goal not found" });
   }
 
   // check insure logined user in UUSER MODEL
@@ -81,15 +78,13 @@ const deleteUserGoal = asyncHandler(async (req, res) => {
   const user = await UUSER.findById(req.user.id);
 
   if (!user) {
-    res.status(401);
-    throw new Error("User not Found");
+    return res.status(401).json("User not Found");
   }
 
   // chckng loggind user is correct user to delte goal or not
 
   if (deleteGoalId.user.toString() !== user._id.toString()) {
-    res.status(401);
-    throw new Error("Not Authorized To Delete");
+    return res.status(401).json("Not Authorized To Delete");
   }
 
   await deleteGoalId.remove();
