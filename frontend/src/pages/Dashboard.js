@@ -8,6 +8,7 @@ import {
   createGoal,
   deleteGoal,
   getGoal,
+  reset,
 
 } from "../features/goalAuth/goalSlice";
 import Spinner from "../pages/components/spinner";
@@ -31,8 +32,8 @@ const Dashboard = () => {
     if (!user) {
       navigate("/login");
     }
-    
     dispatch(getGoal());
+
     
   }, [user, navigate, isError, dispatch, message]);
 
