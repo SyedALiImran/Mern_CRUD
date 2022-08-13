@@ -16,9 +16,9 @@ const getRegisterUsers = asyncHandler(async (req, res) => {
 //@route   GET/api/users
 //@access  Private
 const getMe = asyncHandler(async (req, res) => {
-  const { name, email, id } = await userRegistration.findById(req.user.id);
-  res.status(200).json({ id, name, email });
+  res.status(200).json(req.user);
 });
+  
 
 //@dec     SIGN UP PAGE (createUsers)
 //@route   Post/api/users
@@ -67,7 +67,8 @@ const loginUsers = asyncHandler(async (req, res) => {
   if (!email || !password) {
     res.status(400);
     throw new Error("Kindly fill the fields correctly");
-  } else {
+  }
+   else {
     // finding user
 
     const user = await userRegistration.findOne({ email });
